@@ -145,23 +145,32 @@ function ROIBars({ annualSavings, systemCost }) {
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 function Navbar({ onToolClick }) {
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
+    const fn = () => { setScrolled(window.scrollY > 40); setIsMobile(window.innerWidth < 768); };
     window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
+    window.addEventListener("resize", fn);
+    return () => { window.removeEventListener("scroll", fn); window.removeEventListener("resize", fn); };
   }, []);
   return (
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2rem", height: 64, background: scrolled ? "rgba(255,251,235,0.97)" : "transparent", backdropFilter: scrolled ? "blur(12px)" : "none", borderBottom: scrolled ? "1px solid rgba(251,191,36,0.3)" : "none", transition: "all 0.3s ease" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <SunIcon size={30} animate />
-        <span style={{ fontSize: 20, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", letterSpacing: "-0.02em" }}>SolarCompare</span>
-        <span style={{ fontSize: 11, color: "#B45309", background: "#FEF3C7", padding: "2px 8px", borderRadius: 20, border: "1px solid #FDE68A", fontWeight: 600 }}>India</span>
+    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 1.25rem", height: 58, background: scrolled ? "rgba(255,251,235,0.97)" : "rgba(255,251,235,0.85)", backdropFilter: "blur(12px)", borderBottom: scrolled ? "1px solid rgba(251,191,36,0.3)" : "none", transition: "all 0.3s ease" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <SunIcon size={26} animate />
+        <span style={{ fontSize: 18, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", letterSpacing: "-0.02em" }}>SolarCompare</span>
+        <span style={{ fontSize: 10, color: "#B45309", background: "#FEF3C7", padding: "2px 7px", borderRadius: 20, border: "1px solid #FDE68A", fontWeight: 600 }}>India</span>
       </div>
-      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-        <button onClick={() => onToolClick("advisor")} style={{ padding: "7px 16px", borderRadius: 20, border: "1.5px solid #FDE68A", background: "transparent", color: "#92400e", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Advisor</button>
-        <button onClick={() => onToolClick("compare")} style={{ padding: "7px 16px", borderRadius: 20, border: "1.5px solid #FDE68A", background: "transparent", color: "#92400e", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Compare Panels</button>
-        <button onClick={() => onToolClick("subsidy")} style={{ padding: "7px 16px", borderRadius: 20, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 12px rgba(245,158,11,0.35)" }}>Subsidy Calculator</button>
-      </div>
+      {!isMobile && (
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <button onClick={() => onToolClick("advisor")} style={{ padding: "7px 14px", borderRadius: 20, border: "1.5px solid #FDE68A", background: "transparent", color: "#92400e", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Advisor</button>
+          <button onClick={() => onToolClick("compare")} style={{ padding: "7px 14px", borderRadius: 20, border: "1.5px solid #FDE68A", background: "transparent", color: "#92400e", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Compare Panels</button>
+          <button onClick={() => onToolClick("subsidy")} style={{ padding: "7px 14px", borderRadius: 20, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 12px rgba(245,158,11,0.35)" }}>Subsidy Calculator</button>
+        </div>
+      )}
+      {isMobile && (
+        <button onClick={() => onToolClick("advisor")} style={{ padding: "8px 16px", borderRadius: 20, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+          Calculate →
+        </button>
+      )}
     </nav>
   );
 }
@@ -278,43 +287,47 @@ function StatsBar() {
 
 // ─── How it works ─────────────────────────────────────────────────────────────
 function HowItWorks({ onToolClick }) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const fn = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
+  }, []);
+
   const steps = [
     { num: "01", title: "Details bharo", desc: "Apna monthly bill, roof area aur state batao. 30 seconds ka kaam hai." },
     { num: "02", title: "Panel recommendation pao", desc: "Humara system best panel suggest karta hai — efficiency, cost aur subsidy sab consider karke." },
     { num: "03", title: "Quote WhatsApp karo", desc: "Ek tap mein complete quote generate karo aur dealer ko WhatsApp pe bhejo." },
   ];
   return (
-    <section style={{ padding: "5rem 1rem", background: "#FFFBEB" }}>
+    <section style={{ padding: "4rem 1rem", background: "#FFFBEB" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#D97706", letterSpacing: "0.1em", marginBottom: 8 }}>HOW IT WORKS</div>
-          <h2 style={{ fontSize: "clamp(24px,3vw,36px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", letterSpacing: "-0.02em" }}>3 steps mein solar decision</h2>
+          <h2 style={{ fontSize: "clamp(22px,3vw,36px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", letterSpacing: "-0.02em" }}>3 steps mein solar decision</h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
-          {/* Steps */}
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "2rem" : "4rem", alignItems: "center" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
             {steps.map((s, i) => (
               <div key={i} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
-                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "linear-gradient(135deg,#F59E0B,#D97706)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 14px rgba(245,158,11,0.35)" }}>{s.num}</div>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#F59E0B,#D97706)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 14px rgba(245,158,11,0.35)" }}>{s.num}</div>
                 <div>
-                  <div style={{ fontSize: 17, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", marginBottom: 6 }}>{s.title}</div>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", marginBottom: 5 }}>{s.title}</div>
                   <div style={{ fontSize: 14, color: "#92400e", opacity: 0.75, lineHeight: 1.6 }}>{s.desc}</div>
                 </div>
               </div>
             ))}
-            <div style={{ marginTop: "1rem" }}>
-              <button onClick={() => onToolClick("advisor")}
-                style={{ padding: "13px 32px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: "0 4px 20px rgba(245,158,11,0.35)" }}>
+            <div style={{ marginTop: "0.5rem" }}>
+              <button onClick={() => onToolClick("advisor")} style={{ padding: "13px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: "0 4px 20px rgba(245,158,11,0.35)" }}>
                 Abhi try karo — free hai →
               </button>
             </div>
           </div>
-          {/* Image */}
-          <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", boxShadow: "0 24px 64px rgba(180,83,9,0.2)" }}>
-            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Solar installation on Indian home" style={{ width: "100%", height: 400, objectFit: "cover", display: "block" }} />
-            <div style={{ position: "absolute", bottom: 16, left: 16, background: "rgba(255,251,235,0.95)", backdropFilter: "blur(8px)", borderRadius: 12, padding: "10px 16px", border: "1px solid #FDE68A" }}>
-              <div style={{ fontSize: 11, color: "#D97706", fontWeight: 700 }}>INDIA AVERAGE</div>
-              <div style={{ fontSize: 16, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>₹78,000 subsidy + 5 yr payback</div>
+          <div style={{ position: "relative", borderRadius: 20, overflow: "hidden", boxShadow: "0 16px 48px rgba(180,83,9,0.2)" }}>
+            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Solar installation" style={{ width: "100%", height: isMobile ? 220 : 400, objectFit: "cover", display: "block" }} />
+            <div style={{ position: "absolute", bottom: 14, left: 14, background: "rgba(255,251,235,0.95)", backdropFilter: "blur(8px)", borderRadius: 10, padding: "9px 14px", border: "1px solid #FDE68A" }}>
+              <div style={{ fontSize: 10, color: "#D97706", fontWeight: 700 }}>INDIA AVERAGE</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>₹78,000 subsidy + 5 yr payback</div>
             </div>
           </div>
         </div>
