@@ -169,51 +169,80 @@ function Navbar({ onToolClick }) {
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 function Hero({ onToolClick }) {
   return (
-    <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "8rem 1rem 4rem", position: "relative", overflow: "hidden" }}>
-      {/* Sun rays background */}
-      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "120%", height: "100%", overflow: "hidden", pointerEvents: "none" }}>
-        {Array.from({ length: 16 }, (_, i) => (
-          <div key={i} style={{ position: "absolute", top: 0, left: "50%", width: 3, height: "100%", transformOrigin: "top center", transform: `rotate(${i * 22.5}deg)`, background: `linear-gradient(180deg, rgba(251,191,36,0.1) 0%, transparent 60%)` }} />
-        ))}
-      </div>
-      {/* Big sun */}
-      <div style={{ position: "absolute", top: "10%", left: "50%", transform: "translateX(-50%)", opacity: 0.15, pointerEvents: "none" }}>
-        <SunIcon size={320} animate />
-      </div>
+    <section style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", position: "relative", overflow: "hidden" }}>
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 680 }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FEF3C7", border: "1.5px solid #F59E0B", borderRadius: 20, padding: "6px 16px", marginBottom: "1.5rem" }}>
-          <span style={{ fontSize: 12, color: "#B45309", fontWeight: 700 }}>India's Solar Advisor</span>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#F59E0B", display: "inline-block" }} />
-          <span style={{ fontSize: 12, color: "#92400e" }}>Free · No signup needed</span>
+      {/* LEFT — text content */}
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "8rem 3rem 4rem 4rem", background: "#FFFBEB", position: "relative", zIndex: 1 }}>
+        {/* Decorative sun rays on left */}
+        <div style={{ position: "absolute", top: -100, left: -100, width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(251,191,36,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FEF3C7", border: "1.5px solid #F59E0B", borderRadius: 20, padding: "6px 14px", marginBottom: "1.5rem", width: "fit-content" }}>
+          <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#F59E0B", display: "inline-block", animation: "pulse 2s infinite" }} />
+          <span style={{ fontSize: 12, color: "#B45309", fontWeight: 700 }}>India's #1 Free Solar Advisor</span>
         </div>
 
-        <h1 style={{ fontSize: "clamp(32px,5vw,58px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", lineHeight: 1.1, marginBottom: "1.25rem", letterSpacing: "-0.03em" }}>
+        <h1 style={{ fontSize: "clamp(32px,3.5vw,52px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", lineHeight: 1.1, marginBottom: "1.25rem", letterSpacing: "-0.03em" }}>
           Solar panels ke liye<br />
-          <span style={{ color: "#D97706" }}>sahi decision karo</span>
+          <span style={{ color: "#D97706", position: "relative" }}>sahi decision karo</span>
         </h1>
 
-        <p style={{ fontSize: "clamp(15px,2vw,18px)", color: "#92400e", opacity: 0.75, maxWidth: 500, margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
+        <p style={{ fontSize: 16, color: "#92400e", opacity: 0.75, marginBottom: "2rem", lineHeight: 1.75, maxWidth: 420 }}>
           Panel recommendation, ROI calculator, PM Surya Ghar subsidy — sab ek jagah. Free mein. 60 seconds mein.
         </p>
 
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: "2.5rem" }}>
           <button onClick={() => onToolClick("advisor")}
-            style={{ padding: "14px 32px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 16, fontWeight: 800, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: "0 6px 28px rgba(245,158,11,0.45)", letterSpacing: "0.01em" }}>
+            style={{ padding: "14px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 15, fontWeight: 800, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: "0 6px 28px rgba(245,158,11,0.45)" }}>
             Calculate my savings →
           </button>
           <button onClick={() => onToolClick("compare")}
-            style={{ padding: "14px 32px", borderRadius: 12, border: "2px solid #F59E0B", background: "#FFFBEB", color: "#B45309", fontSize: 16, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif" }}>
+            style={{ padding: "14px 28px", borderRadius: 12, border: "2px solid #F59E0B", background: "transparent", color: "#B45309", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>
             Compare panels
           </button>
         </div>
 
-        <div style={{ display: "flex", gap: 24, justifyContent: "center", marginTop: "2.5rem", flexWrap: "wrap" }}>
-          {[["✓", "Free to use"], ["✓", "No signup"], ["✓", "PM Surya Ghar subsidy included"], ["✓", "WhatsApp quote"]].map(([icon, text], i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#92400e" }}>
-              <span style={{ color: "#D97706", fontWeight: 700 }}>{icon}</span> {text}
+        {/* Trust badges */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {[["✓ Free to use", "No hidden charges, ever"],["✓ PM Surya Ghar", "Subsidy up to ₹78,000 calculated"],["✓ WhatsApp quote", "Share with dealer instantly"]].map(([title, sub], i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: "#FEF3C7", border: "1px solid #FDE68A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, color: "#D97706", flexShrink: 0 }}>{i === 0 ? "₹" : i === 1 ? "🏛" : "📲"}</div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#78350f" }}>{title}</div>
+                <div style={{ fontSize: 11, color: "#92400e", opacity: 0.6 }}>{sub}</div>
+              </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* RIGHT — full photo */}
+      <div style={{ position: "relative", overflow: "hidden" }}>
+        <img
+          src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=85"
+          alt="Solar panels on rooftop"
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+        />
+        {/* Gradient overlay left edge to blend with left panel */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,251,235,0.3) 0%, transparent 30%)" }} />
+        {/* Bottom overlay */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 50%, rgba(120,53,15,0.5) 100%)" }} />
+
+        {/* Floating stat cards on the photo */}
+        <div style={{ position: "absolute", top: "20%", left: "8%", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderRadius: 14, padding: "14px 18px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)", border: "1px solid rgba(251,191,36,0.4)" }}>
+          <div style={{ fontSize: 11, color: "#D97706", fontWeight: 700, marginBottom: 2 }}>ANNUAL SAVINGS</div>
+          <div style={{ fontSize: 24, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>₹42,000+</div>
+          <div style={{ fontSize: 11, color: "#92400e", opacity: 0.7 }}>avg. Indian household</div>
+        </div>
+
+        <div style={{ position: "absolute", top: "45%", right: "8%", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderRadius: 14, padding: "14px 18px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)", border: "1px solid rgba(251,191,36,0.4)" }}>
+          <div style={{ fontSize: 11, color: "#D97706", fontWeight: 700, marginBottom: 2 }}>PAYBACK PERIOD</div>
+          <div style={{ fontSize: 24, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>4–6 yrs</div>
+          <div style={{ fontSize: 11, color: "#92400e", opacity: 0.7 }}>then free electricity</div>
+        </div>
+
+        <div style={{ position: "absolute", bottom: "12%", left: "50%", transform: "translateX(-50%)", background: "linear-gradient(135deg,#F59E0B,#D97706)", borderRadius: 14, padding: "12px 20px", boxShadow: "0 8px 24px rgba(245,158,11,0.4)", whiteSpace: "nowrap" }}>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.85)", fontWeight: 600, marginBottom: 1 }}>PM Surya Ghar Subsidy</div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: "#fff", fontFamily: "'Outfit', sans-serif" }}>Up to ₹78,000 FREE</div>
         </div>
       </div>
     </section>
@@ -246,32 +275,44 @@ function StatsBar() {
 // ─── How it works ─────────────────────────────────────────────────────────────
 function HowItWorks({ onToolClick }) {
   const steps = [
-    { num: "01", icon: "📋", title: "Details bharo", desc: "Apna monthly bill, roof area aur state batao. 30 seconds ka kaam hai." },
-    { num: "02", icon: "☀️", title: "Panel recommendation pao", desc: "Humara system best panel suggest karta hai — efficiency, cost aur subsidy sab consider karke." },
-    { num: "03", icon: "📲", title: "Quote WhatsApp karo", desc: "Ek tap mein complete quote generate karo aur dealer ko WhatsApp pe bhejo." },
+    { num: "01", title: "Details bharo", desc: "Apna monthly bill, roof area aur state batao. 30 seconds ka kaam hai." },
+    { num: "02", title: "Panel recommendation pao", desc: "Humara system best panel suggest karta hai — efficiency, cost aur subsidy sab consider karke." },
+    { num: "03", title: "Quote WhatsApp karo", desc: "Ek tap mein complete quote generate karo aur dealer ko WhatsApp pe bhejo." },
   ];
   return (
     <section style={{ padding: "5rem 1rem", background: "#FFFBEB" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#D97706", letterSpacing: "0.1em", marginBottom: 8 }}>HOW IT WORKS</div>
           <h2 style={{ fontSize: "clamp(24px,3vw,36px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", letterSpacing: "-0.02em" }}>3 steps mein solar decision</h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.5rem" }}>
-          {steps.map((s, i) => (
-            <div key={i} style={{ background: "#fff", border: "1.5px solid #FDE68A", borderRadius: 16, padding: "1.75rem", boxShadow: "0 4px 20px rgba(245,158,11,0.08)", position: "relative" }}>
-              <div style={{ fontSize: 48, fontWeight: 800, color: "rgba(251,191,36,0.15)", fontFamily: "'Outfit', sans-serif", position: "absolute", top: 12, right: 16, lineHeight: 1 }}>{s.num}</div>
-              <div style={{ fontSize: 32, marginBottom: 12 }}>{s.icon}</div>
-              <div style={{ fontSize: 17, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", marginBottom: 8 }}>{s.title}</div>
-              <div style={{ fontSize: 14, color: "#92400e", opacity: 0.75, lineHeight: 1.6 }}>{s.desc}</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
+          {/* Steps */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            {steps.map((s, i) => (
+              <div key={i} style={{ display: "flex", gap: "1.25rem", alignItems: "flex-start" }}>
+                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "linear-gradient(135deg,#F59E0B,#D97706)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 800, color: "#fff", flexShrink: 0, boxShadow: "0 4px 14px rgba(245,158,11,0.35)" }}>{s.num}</div>
+                <div>
+                  <div style={{ fontSize: 17, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", marginBottom: 6 }}>{s.title}</div>
+                  <div style={{ fontSize: 14, color: "#92400e", opacity: 0.75, lineHeight: 1.6 }}>{s.desc}</div>
+                </div>
+              </div>
+            ))}
+            <div style={{ marginTop: "1rem" }}>
+              <button onClick={() => onToolClick("advisor")}
+                style={{ padding: "13px 32px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: "0 4px 20px rgba(245,158,11,0.35)" }}>
+                Abhi try karo — free hai →
+              </button>
             </div>
-          ))}
-        </div>
-        <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
-          <button onClick={() => onToolClick("advisor")}
-            style={{ padding: "13px 32px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: "0 4px 20px rgba(245,158,11,0.35)" }}>
-            Abhi try karo — free hai →
-          </button>
+          </div>
+          {/* Image */}
+          <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", boxShadow: "0 24px 64px rgba(180,83,9,0.2)" }}>
+            <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Solar installation on Indian home" style={{ width: "100%", height: 400, objectFit: "cover", display: "block" }} />
+            <div style={{ position: "absolute", bottom: 16, left: 16, background: "rgba(255,251,235,0.95)", backdropFilter: "blur(8px)", borderRadius: 12, padding: "10px 16px", border: "1px solid #FDE68A" }}>
+              <div style={{ fontSize: 11, color: "#D97706", fontWeight: 700 }}>INDIA AVERAGE</div>
+              <div style={{ fontSize: 16, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>₹78,000 subsidy + 5 yr payback</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -281,27 +322,34 @@ function HowItWorks({ onToolClick }) {
 // ─── Tool cards ───────────────────────────────────────────────────────────────
 function ToolCards({ onToolClick }) {
   const tools = [
-    { id: "advisor", icon: "🔆", title: "Solar Advisor", desc: "Bill, roof aur budget batao — best panel recommend karega with full ROI calculation.", cta: "Calculate savings", color: "#F59E0B" },
-    { id: "compare", icon: "⚖️", title: "Panel Comparator", desc: "Solance ke 6 SPL models side-by-side compare karo — efficiency, voltage, current sab.", cta: "Compare panels", color: "#D97706" },
-    { id: "subsidy", icon: "🏛️", title: "Subsidy Calculator", desc: "PM Surya Ghar Muft Bijli Yojana ke under kitni subsidy milegi — state-wise calculate karo.", cta: "Check subsidy", color: "#B45309" },
+    { id: "advisor", img: "https://images.unsplash.com/photo-1548337138-e87d889cc369?w=600&q=80", title: "Solar Advisor", desc: "Bill, roof aur budget batao — best panel recommend karega with full ROI calculation.", cta: "Calculate savings", color: "#F59E0B" },
+    { id: "compare", img: "https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?w=600&q=80", title: "Panel Comparator", desc: "6 SPL models side-by-side compare karo — efficiency, voltage, current sab ek jagah.", cta: "Compare panels", color: "#D97706" },
+    { id: "subsidy", img: "https://images.unsplash.com/photo-1521618755572-156ae0cdd74d?w=600&q=80", title: "Subsidy Calculator", desc: "PM Surya Ghar Muft Bijli Yojana ke under kitni subsidy milegi — state-wise calculate karo.", cta: "Check subsidy", color: "#B45309" },
   ];
   return (
     <section style={{ padding: "5rem 1rem", background: "linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 100%)" }}>
-      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#D97706", letterSpacing: "0.1em", marginBottom: 8 }}>OUR TOOLS</div>
           <h2 style={{ fontSize: "clamp(24px,3vw,36px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", letterSpacing: "-0.02em" }}>Sab kuch ek jagah, free mein</h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
           {tools.map((t, i) => (
-            <div key={i} style={{ background: "#fff", border: "1.5px solid #FDE68A", borderRadius: 20, padding: "2rem", boxShadow: "0 8px 32px rgba(245,158,11,0.1)", display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 40, marginBottom: "1rem" }}>{t.icon}</div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", marginBottom: 8 }}>{t.title}</div>
-              <div style={{ fontSize: 14, color: "#92400e", opacity: 0.7, lineHeight: 1.65, flex: 1, marginBottom: "1.5rem" }}>{t.desc}</div>
-              <button onClick={() => onToolClick(t.id)}
-                style={{ padding: "11px 20px", borderRadius: 10, border: "none", background: `linear-gradient(135deg, ${t.color}, ${t.color}dd)`, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: `0 3px 14px ${t.color}55` }}>
-                {t.cta} →
-              </button>
+            <div key={i} style={{ background: "#fff", border: "1.5px solid #FDE68A", borderRadius: 20, overflow: "hidden", boxShadow: "0 8px 32px rgba(245,158,11,0.1)", display: "flex", flexDirection: "column" }}>
+              <div style={{ position: "relative", height: 180, overflow: "hidden" }}>
+                <img src={t.img} alt={t.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s ease" }}
+                  onMouseEnter={e => e.target.style.transform = "scale(1.05)"}
+                  onMouseLeave={e => e.target.style.transform = "scale(1)"} />
+                <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, transparent 40%, rgba(120,53,15,0.6) 100%)` }} />
+                <div style={{ position: "absolute", bottom: 12, left: 16, fontSize: 18, fontWeight: 800, color: "#fff", fontFamily: "'Outfit', sans-serif" }}>{t.title}</div>
+              </div>
+              <div style={{ padding: "1.25rem 1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
+                <div style={{ fontSize: 14, color: "#92400e", opacity: 0.75, lineHeight: 1.65, flex: 1, marginBottom: "1.25rem" }}>{t.desc}</div>
+                <button onClick={() => onToolClick(t.id)}
+                  style={{ padding: "11px 20px", borderRadius: 10, border: "none", background: `linear-gradient(135deg, ${t.color}, ${t.color}cc)`, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: `0 3px 14px ${t.color}55` }}>
+                  {t.cta} →
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -318,21 +366,26 @@ function Testimonials() {
     { name: "Suresh Kumar", city: "Jaipur, Rajasthan", text: "Compare panel feature se pata chala SPL-550W best efficiency deta hai. Mera dealer bhi same recommend kiya. Trust build hua.", stars: 5 },
   ];
   return (
-    <section style={{ padding: "5rem 1rem", background: "#FFFBEB" }}>
-      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+    <section style={{ padding: "5rem 1rem", position: "relative", overflow: "hidden" }}>
+      {/* Background image */}
+      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1600&q=80" alt="Solar farm background" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <div style={{ position: "absolute", inset: 0, background: "rgba(255,251,235,0.93)" }} />
+      </div>
+      <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#D97706", letterSpacing: "0.1em", marginBottom: 8 }}>REVIEWS</div>
           <h2 style={{ fontSize: "clamp(24px,3vw,36px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", letterSpacing: "-0.02em" }}>Logon ne kya kaha</h2>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.5rem" }}>
           {reviews.map((r, i) => (
-            <div key={i} style={{ background: "#fff", border: "1.5px solid #FDE68A", borderRadius: 16, padding: "1.5rem", boxShadow: "0 4px 20px rgba(245,158,11,0.08)" }}>
+            <div key={i} style={{ background: "rgba(255,255,255,0.9)", backdropFilter: "blur(12px)", border: "1.5px solid #FDE68A", borderRadius: 16, padding: "1.5rem", boxShadow: "0 8px 32px rgba(245,158,11,0.12)" }}>
               <div style={{ display: "flex", gap: 2, marginBottom: 12 }}>
                 {Array.from({ length: r.stars }, (_, j) => <span key={j} style={{ fontSize: 16, color: "#F59E0B" }}>★</span>)}
               </div>
               <p style={{ fontSize: 14, color: "#78350f", lineHeight: 1.7, marginBottom: "1rem", fontStyle: "italic" }}>"{r.text}"</p>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg,#FEF3C7,#FDE68A)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 700, color: "#B45309" }}>{r.name[0]}</div>
+                <div style={{ width: 40, height: 40, borderRadius: "50%", background: "linear-gradient(135deg,#F59E0B,#D97706)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, fontWeight: 800, color: "#fff" }}>{r.name[0]}</div>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: "#78350f" }}>{r.name}</div>
                   <div style={{ fontSize: 11, color: "#92400e", opacity: 0.6 }}>{r.city}</div>
@@ -409,8 +462,21 @@ function ToolSection({ activeTab, toolRef }) {
   const card = { background: "#FFFBEB", border: "1.5px solid #FDE68A", borderRadius: 20, padding: "1.75rem", boxShadow: "0 8px 40px rgba(245,158,11,0.1)" };
 
   return (
-    <section ref={toolRef} style={{ padding: "4rem 1rem 5rem", background: "#fff" }}>
-      <div style={{ maxWidth: 620, margin: "0 auto" }}>
+    <section ref={toolRef} style={{ padding: "4rem 1rem 5rem", position: "relative", overflow: "hidden", background: "#FFFBEB" }}>
+      {/* Decorative background */}
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
+        {/* Soft grid pattern */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(251,191,36,0.18) 1.5px, transparent 1.5px)", backgroundSize: "32px 32px" }} />
+        {/* Big amber blob top right */}
+        <div style={{ position: "absolute", top: -120, right: -120, width: 420, height: 420, borderRadius: "50%", background: "radial-gradient(circle, rgba(251,191,36,0.22) 0%, transparent 70%)" }} />
+        {/* Big amber blob bottom left */}
+        <div style={{ position: "absolute", bottom: -100, left: -100, width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle, rgba(217,119,6,0.15) 0%, transparent 70%)" }} />
+        {/* Faint rotating sun watermark */}
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", opacity: 0.04 }}>
+          <SunIcon size={600} animate />
+        </div>
+      </div>
+      <div style={{ maxWidth: 620, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: "#D97706", letterSpacing: "0.1em", marginBottom: 8 }}>TOOLS</div>
           <h2 style={{ fontSize: 28, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>Solar tools</h2>
@@ -694,6 +760,7 @@ export default function SolarCompare() {
         body { background: #FFFBEB; font-family: 'Nunito', sans-serif; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.3); } }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #F59E0B; cursor: pointer; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(245,158,11,0.4); }
         input[type=range] { -webkit-appearance: none; appearance: none; background: transparent; }
         button { transition: all 0.15s ease; font-family: 'Nunito', sans-serif; }
