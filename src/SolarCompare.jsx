@@ -168,46 +168,49 @@ function Navbar({ onToolClick }) {
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 function Hero({ onToolClick }) {
-  return (
-    <section style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", position: "relative", overflow: "hidden" }}>
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const fn = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
+  }, []);
 
-      {/* LEFT — text content */}
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "8rem 3rem 4rem 4rem", background: "#FFFBEB", position: "relative", zIndex: 1 }}>
-        {/* Decorative sun rays on left */}
+  return (
+    <section style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", position: "relative", overflow: "hidden" }}>
+
+      {/* LEFT — text */}
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: isMobile ? "5.5rem 1.5rem 2rem" : "8rem 3rem 4rem 4rem", background: "#FFFBEB", position: "relative", zIndex: 1 }}>
         <div style={{ position: "absolute", top: -100, left: -100, width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(251,191,36,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FEF3C7", border: "1.5px solid #F59E0B", borderRadius: 20, padding: "6px 14px", marginBottom: "1.5rem", width: "fit-content" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#FEF3C7", border: "1.5px solid #F59E0B", borderRadius: 20, padding: "6px 14px", marginBottom: "1.25rem", width: "fit-content" }}>
           <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#F59E0B", display: "inline-block", animation: "pulse 2s infinite" }} />
           <span style={{ fontSize: 12, color: "#B45309", fontWeight: 700 }}>India's #1 Free Solar Advisor</span>
         </div>
 
-        <h1 style={{ fontSize: "clamp(32px,3.5vw,52px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", lineHeight: 1.1, marginBottom: "1.25rem", letterSpacing: "-0.03em" }}>
+        <h1 style={{ fontSize: isMobile ? "32px" : "clamp(32px,3.5vw,52px)", fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif", lineHeight: 1.15, marginBottom: "1rem", letterSpacing: "-0.02em" }}>
           Solar panels ke liye<br />
-          <span style={{ color: "#D97706", position: "relative" }}>sahi decision karo</span>
+          <span style={{ color: "#D97706" }}>sahi decision karo</span>
         </h1>
 
-        <p style={{ fontSize: 16, color: "#92400e", opacity: 0.75, marginBottom: "2rem", lineHeight: 1.75, maxWidth: 420 }}>
+        <p style={{ fontSize: isMobile ? 14 : 16, color: "#92400e", opacity: 0.75, marginBottom: "1.5rem", lineHeight: 1.7, maxWidth: 420 }}>
           Panel recommendation, ROI calculator, PM Surya Ghar subsidy — sab ek jagah. Free mein. 60 seconds mein.
         </p>
 
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: "2.5rem" }}>
-          <button onClick={() => onToolClick("advisor")}
-            style={{ padding: "14px 28px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 15, fontWeight: 800, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: "0 6px 28px rgba(245,158,11,0.45)" }}>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: "1.5rem" }}>
+          <button onClick={() => onToolClick("advisor")} style={{ padding: "13px 22px", borderRadius: 12, border: "none", background: "linear-gradient(135deg,#F59E0B,#D97706)", color: "#fff", fontSize: 14, fontWeight: 800, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: "0 6px 28px rgba(245,158,11,0.45)" }}>
             Calculate my savings →
           </button>
-          <button onClick={() => onToolClick("compare")}
-            style={{ padding: "14px 28px", borderRadius: 12, border: "2px solid #F59E0B", background: "transparent", color: "#B45309", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>
+          <button onClick={() => onToolClick("compare")} style={{ padding: "13px 22px", borderRadius: 12, border: "2px solid #F59E0B", background: "transparent", color: "#B45309", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
             Compare panels
           </button>
         </div>
 
-        {/* Trust badges */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {[["✓ Free to use", "No hidden charges, ever"],["✓ PM Surya Ghar", "Subsidy up to ₹78,000 calculated"],["✓ WhatsApp quote", "Share with dealer instantly"]].map(([title, sub], i) => (
+        <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
+          {[["₹", "✓ Free to use", "No hidden charges, ever"], ["🏛", "✓ PM Surya Ghar", "Subsidy up to ₹78,000 calculated"], ["📲", "✓ WhatsApp quote", "Share with dealer instantly"]].map(([icon, title, sub], i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 36, height: 36, borderRadius: 10, background: "#FEF3C7", border: "1px solid #FDE68A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, color: "#D97706", flexShrink: 0 }}>{i === 0 ? "₹" : i === 1 ? "🏛" : "📲"}</div>
+              <div style={{ width: 32, height: 32, borderRadius: 8, background: "#FEF3C7", border: "1px solid #FDE68A", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#D97706", flexShrink: 0 }}>{icon}</div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: "#78350f" }}>{title}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#78350f" }}>{title}</div>
                 <div style={{ fontSize: 11, color: "#92400e", opacity: 0.6 }}>{sub}</div>
               </div>
             </div>
@@ -215,36 +218,37 @@ function Hero({ onToolClick }) {
         </div>
       </div>
 
-      {/* RIGHT — full photo */}
-      <div style={{ position: "relative", overflow: "hidden" }}>
-        <img
-          src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=85"
-          alt="Solar panels on rooftop"
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
-        />
-        {/* Gradient overlay left edge to blend with left panel */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,251,235,0.3) 0%, transparent 30%)" }} />
-        {/* Bottom overlay */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 50%, rgba(120,53,15,0.5) 100%)" }} />
-
-        {/* Floating stat cards on the photo */}
-        <div style={{ position: "absolute", top: "20%", left: "8%", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderRadius: 14, padding: "14px 18px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)", border: "1px solid rgba(251,191,36,0.4)" }}>
-          <div style={{ fontSize: 11, color: "#D97706", fontWeight: 700, marginBottom: 2 }}>ANNUAL SAVINGS</div>
-          <div style={{ fontSize: 24, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>₹42,000+</div>
-          <div style={{ fontSize: 11, color: "#92400e", opacity: 0.7 }}>avg. Indian household</div>
+      {/* RIGHT — photo (full on desktop, strip on mobile) */}
+      {isMobile ? (
+        <div style={{ position: "relative", height: 200, overflow: "hidden" }}>
+          <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=800&q=80" alt="Solar panels" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 60%" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 30%, rgba(120,53,15,0.5) 100%)" }} />
+          <div style={{ position: "absolute", bottom: 14, left: "50%", transform: "translateX(-50%)", background: "linear-gradient(135deg,#F59E0B,#D97706)", borderRadius: 10, padding: "9px 18px", whiteSpace: "nowrap", boxShadow: "0 4px 16px rgba(245,158,11,0.4)" }}>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>PM Surya Ghar Subsidy</div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "#fff", fontFamily: "'Outfit', sans-serif" }}>Up to ₹78,000 FREE</div>
+          </div>
         </div>
-
-        <div style={{ position: "absolute", top: "45%", right: "8%", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderRadius: 14, padding: "14px 18px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)", border: "1px solid rgba(251,191,36,0.4)" }}>
-          <div style={{ fontSize: 11, color: "#D97706", fontWeight: 700, marginBottom: 2 }}>PAYBACK PERIOD</div>
-          <div style={{ fontSize: 24, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>4–6 yrs</div>
-          <div style={{ fontSize: 11, color: "#92400e", opacity: 0.7 }}>then free electricity</div>
+      ) : (
+        <div style={{ position: "relative", overflow: "hidden" }}>
+          <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=85" alt="Solar panels on rooftop" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,251,235,0.3) 0%, transparent 30%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, transparent 50%, rgba(120,53,15,0.5) 100%)" }} />
+          <div style={{ position: "absolute", top: "20%", left: "8%", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderRadius: 14, padding: "14px 18px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)", border: "1px solid rgba(251,191,36,0.4)" }}>
+            <div style={{ fontSize: 11, color: "#D97706", fontWeight: 700, marginBottom: 2 }}>ANNUAL SAVINGS</div>
+            <div style={{ fontSize: 24, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>₹42,000+</div>
+            <div style={{ fontSize: 11, color: "#92400e", opacity: 0.7 }}>avg. Indian household</div>
+          </div>
+          <div style={{ position: "absolute", top: "45%", right: "8%", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(12px)", borderRadius: 14, padding: "14px 18px", boxShadow: "0 8px 32px rgba(0,0,0,0.12)", border: "1px solid rgba(251,191,36,0.4)" }}>
+            <div style={{ fontSize: 11, color: "#D97706", fontWeight: 700, marginBottom: 2 }}>PAYBACK PERIOD</div>
+            <div style={{ fontSize: 24, fontWeight: 800, color: "#78350f", fontFamily: "'Outfit', sans-serif" }}>4–6 yrs</div>
+            <div style={{ fontSize: 11, color: "#92400e", opacity: 0.7 }}>then free electricity</div>
+          </div>
+          <div style={{ position: "absolute", bottom: "12%", left: "50%", transform: "translateX(-50%)", background: "linear-gradient(135deg,#F59E0B,#D97706)", borderRadius: 14, padding: "12px 20px", boxShadow: "0 8px 24px rgba(245,158,11,0.4)", whiteSpace: "nowrap" }}>
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.85)", fontWeight: 600, marginBottom: 1 }}>PM Surya Ghar Subsidy</div>
+            <div style={{ fontSize: 20, fontWeight: 800, color: "#fff", fontFamily: "'Outfit', sans-serif" }}>Up to ₹78,000 FREE</div>
+          </div>
         </div>
-
-        <div style={{ position: "absolute", bottom: "12%", left: "50%", transform: "translateX(-50%)", background: "linear-gradient(135deg,#F59E0B,#D97706)", borderRadius: 14, padding: "12px 20px", boxShadow: "0 8px 24px rgba(245,158,11,0.4)", whiteSpace: "nowrap" }}>
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.85)", fontWeight: 600, marginBottom: 1 }}>PM Surya Ghar Subsidy</div>
-          <div style={{ fontSize: 20, fontWeight: 800, color: "#fff", fontFamily: "'Outfit', sans-serif" }}>Up to ₹78,000 FREE</div>
-        </div>
-      </div>
+      )}
     </section>
   );
 }
